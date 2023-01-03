@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Francois+One&family=Open+Sans:ital,wght@0,400;1,300&family=Yanone+Kaffeesatz&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Roboto+Condensed&family=Roboto:ital,wght@0,400;1,100&display=swap');
+
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.index-title{
+  font-family: 'Francois One', sans-serif;
+}
+
+.index-picture{
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter, 1s;
+}
+
+.index-item:hover .index-picture{
+  filter: grayscale(0%) !important;
+  transform: scale(1.02);
+}
