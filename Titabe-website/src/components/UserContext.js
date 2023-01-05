@@ -1,9 +1,9 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 const UserContext = createContext('');
 
 export const UserContextProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = setState({
+    const [currentUser, setCurrentUser] = useState({
         email: "", 
         id: 0, 
         logged: false 

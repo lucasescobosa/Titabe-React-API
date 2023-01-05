@@ -4,6 +4,32 @@ const db = require('../database/models');
 
 const usersController = {
 
+    register: async (req, res) => {
+        console.log(req.body)
+        const {fullName, email, phoneNumber, password} = req.body;
+        const user = await db.User.findOne({where: {email: email}});
+
+        if(user){
+            res.status(409).json({error: 'user already exist'})
+        }
+        else{
+            try{
+                const newUser = await db.User.create({
+                    fullName: fullName,
+                    email: email,
+                    phoneNumber: parseInt(phoneNumber),
+                    address: "",
+                    password: bcrypt.hashSync(password , 10),
+                    image: "default.jpg",
+                    role_id: 3
+                })
+                res.json('Successful');
+    
+            } catch(e) {
+                res.status(500).json({ error: 'could not connect to database' })
+            }
+        }
+    },
     login: async (req, res) => {
         const {email, password} = req.body;
         const user = await db.User.findOne({where: {email: email}});

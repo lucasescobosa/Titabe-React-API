@@ -4,6 +4,7 @@ const usersController = require('../controllers/usersController')
 const router = express.Router();
 
 router.post('/login', usersController.login)
+router.post('/register', usersController.register)
 /*
 router.get('/', usersController.apiGetAll)
 router.get('/subcategory/:id', usersController.apiGetSubcategory)
