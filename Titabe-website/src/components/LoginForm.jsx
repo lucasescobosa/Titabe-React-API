@@ -42,7 +42,8 @@ const LoginForm = () => {
             alert("Inicio de sesión correcto!");
             localStorage.setItem("accessToken", response.data.token);
                 setCurrentUser({
-                    email: response.data.email, 
+                    email: response.data.email,
+                    fullName: response.data.fullName, 
                     id: response.data.id, 
                     logged: true
                 });

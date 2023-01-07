@@ -14,7 +14,10 @@ module.exports = (env, argv) => {
             publicPath: '/'
         },
         plugins: [
-            new HtmlWebpackPlugin({ template: 'public/index.html' })
+            new HtmlWebpackPlugin({ 
+              template: 'public/index.html',
+              favicon: './src/assets/images/isotype-logo-white.png'
+            })
         ],
         module: {
             rules: [

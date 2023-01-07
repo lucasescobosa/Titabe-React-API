@@ -30,6 +30,7 @@ const usersController = {
             }
         }
     },
+
     login: async (req, res) => {
         const {email, password} = req.body;
         const user = await db.User.findOne({where: {email: email}});
@@ -41,16 +42,26 @@ const usersController = {
         else{
             const token = jwt.sign({
                 email: user.email,
+                fullName: user.fullName,
                 id: user.id
             }, 'titabesecret')
 
             res.json({
                 email: user.email,
+                fullName: user.fullName,
                 id: user.id,
                 token
             })
         }
     },
+
+    logged: (req, res) => {
+        res.json({
+            email: req.user.email,
+            fullName: req.user.fullName,
+            id: req.user.id,
+        })
+    }
     
 }
 
