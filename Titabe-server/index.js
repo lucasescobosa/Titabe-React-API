@@ -19,10 +19,11 @@ app.get('/', function(req, res){
 });
 
 //Routers
-/*const storeRouter = require ('./api/storeRouter')
-app.use('/api/store', storeRouter)*/
+const storeRouter = require ('./routes/storeRouter')
+app.use('/api/store', storeRouter)
 const usersRouter = require ('./routes/usersRouter')
 app.use('/api/users', usersRouter)
+app.use('/images/', express.static('images'));
 
 if(!module.parent){
     app.listen(port);

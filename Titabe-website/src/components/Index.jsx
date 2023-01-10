@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Ratio from 'react-bootstrap/Ratio'
 import Image from 'react-bootstrap/Image'
+import { Link } from 'react-router-dom'
 import imgCat1 from '../assets/images/products/cat1.png'
 import imgCat2 from '../assets/images/products/cat2.png'
 import imgCat3 from '../assets/images/products/cat3.png'
@@ -19,14 +20,15 @@ const Home = () => {
         <Container fluid className="my-3">
             <Row className="g-0">
                 <Col md={6} className='index-item'>
+                        
                     <Ratio aspectRatio={50}>
                         <>
                         <Image rounded fluid src={imgCat4} className="p-2 index-picture" alt="fogonero"/>
-                        <a href="/products/subcategory/4" className="stretched-link">
                         <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">FOGONEROS</p>
-                        </a>
+                        <Link to={'/store'} className='stretched-link'/>
                         </>
                     </Ratio>
+                        
                 </Col>
                 <Col xs={6} md={3} className='index-item'>
                     <Ratio aspectRatio={'1x1'}>
