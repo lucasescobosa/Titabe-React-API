@@ -10,8 +10,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Figure from 'react-bootstrap/Figure';
 import Card from 'react-bootstrap/Card';
 
-import cardPicture from '../assets/images/products/cat3.png'
-
 const StoreCard = (item) => {
     let navigate = useNavigate();
 
@@ -21,7 +19,7 @@ const StoreCard = (item) => {
 
     return ( 
         <Col xs={12} sm={6} lg={4} className='mb-4'>
-            <Card bg="light" className="h-100 shadow">
+            <Card bg="light" className="h-100 shadow store-card">
                 <Card.Img variant="top" src={`http://localhost:3001/images/products/${item.products_images[0].name}`} style={{height: '250px', objectFit: 'contain'}}/>
                 <Card.Body className="text-center d-flex flex-column">
                     <Card.Title className="card-product-title fs-3">{item.name}</Card.Title>

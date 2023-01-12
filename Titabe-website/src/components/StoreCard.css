@@ -12,9 +12,9 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.card {
+.store-card {
     transition: all, 0.5s;
 }
-.card:hover{
+.store-card:hover{
     transform: scale(1.05);
 }

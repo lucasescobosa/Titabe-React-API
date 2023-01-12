@@ -3,6 +3,7 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx';
 import Store from './pages/Store.jsx';
+import Detail from './pages/Detail.jsx';
 import { UserContextProvider } from './components/UserContext.js';
 
 import './App.css'
@@ -18,6 +19,7 @@ const App = () => {
             <Route path='/login' element={<Login/>} />
             <Route path='/register' element={<Register/>} />
             <Route path='/store' element={<Store/>} />
+            <Route path='/detail/:id' element={<Detail/>} />
           </Routes>
         </Router>
       </UserContextProvider>
