@@ -1,9 +1,11 @@
 const express = require ("express")
 const morgan = require ('morgan') //logger
 const cors = require ('cors')
+const multer = require('multer');
 const db = require('./database/models')
 
 const app = module.exports = express()
+require('dotenv').config();
 
 const port = process.env.PORT || 3001
 process.env.NODE_ENV !== "prod" && app.use(morgan("dev"))
@@ -12,7 +14,7 @@ app.use(express.json())
 app.use(cors({
     origin: ['http://localhost:3000']
 }))
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: false }))
 
 app.get('/', function(req, res){
     res.json('Hello World');

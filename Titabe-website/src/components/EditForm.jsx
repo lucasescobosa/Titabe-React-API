@@ -12,20 +12,33 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormImage from "../assets/images/fire.jpg";
+import { useState } from "react";
 
-const ItemForm = () => {
+const EditForm = ({initialValues , title}) => {
 
   let navigate = useNavigate();
 
+  const selectCategories = [
+    {value: 1, label: 'Productos'},
+    {value: 2, label: 'Servicios'},
+  ]
+
+  const selectSubcategories = [
+    {value: 1, label: 'Leñeros/Braseros/Diablitos'},
+    {value: 2, label: 'Parrillas'},
+    {value: 3, label: 'A la cruz'},
+    {value: 4, label: 'Fogoneros'},
+    {value: 5, label: 'Asadores'},
+    {value: 6, label: 'Discos'},
+    {value: 7, label: 'Accesorios'},
+    {value: 8, label: 'Tablas'},
+    {value: 9, label: 'Alquileres'},
+    {value: 10, label: 'Grabados'},
+  ]
+
+
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      descriptionShort: "",
-      descriptionLong: "",
-      price: "",
-      discount: 0,
-      stock: 0
-    },
+    initialValues: initialValues,
     validationSchema: Yup.object().shape({
       name: Yup.string()
         .min(5, "Escriba un nombre válido")
@@ -66,6 +79,7 @@ const ItemForm = () => {
 
   return (
     <div className="bg-light text-dark" style={{ padding: "5em 0" }}>
+      {console.log(initialValues)}
       <Container className="px-3 mx-auto">
         <Row className="justify-content-center">
           <Col md={12} lg={10} className="px-3">
@@ -82,7 +96,7 @@ const ItemForm = () => {
               <Col md={7} className="p-4 p-md-5">
                 <div className="d-flex justify-content-between">
                   <div className="w-60 text-start">
-                    <h3 className="mb-4">AGREGAR UN NUEVO ITEM</h3>
+                    <h3 className="mb-4">{title}</h3>
                   </div>
                 </div>
                 <Form noValidate onSubmit={formik.handleSubmit}>
@@ -95,7 +109,7 @@ const ItemForm = () => {
                       type="text"
                       placeholder="Nombre del producto"
                       name="name"
-                      value={formik.values.name || ""}
+                      value={formik.values.name}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       isInvalid={formik.touched.name && !!formik.errors.name}
@@ -114,7 +128,7 @@ const ItemForm = () => {
                       type="text"
                       placeholder="Descripción breve"
                       name="descriptionShort"
-                      value={formik.values.descriptionShort || ""}
+                      value={formik.values.descriptionShort}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       isInvalid={formik.touched.descriptionShort && !!formik.errors.descriptionShort}
@@ -134,7 +148,7 @@ const ItemForm = () => {
                       placeholder="Descripción detallada"
                       name="descriptionLong"
                       style={{ height: '100px' }}
-                      value={formik.values.descriptionLong || ""}
+                      value={formik.values.descriptionLong}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       isInvalid={formik.touched.descriptionLong && !!formik.errors.descriptionLong}
@@ -158,7 +172,7 @@ const ItemForm = () => {
                             type="number"
                             placeholder="Precio original"
                             name="price"
-                            value={formik.values.price || ""}
+                            value={formik.values.price}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             isInvalid={
@@ -183,7 +197,7 @@ const ItemForm = () => {
                             type="number"
                             placeholder="Descuento"
                             name="discount"
-                            value={formik.values.discount || ""}
+                            value={formik.values.discount}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             isInvalid={
@@ -208,7 +222,7 @@ const ItemForm = () => {
                         >
                             <Form.Select
                             name="category"
-                            value={formik.values.category || ""}
+                            value={formik.values.category}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             isInvalid={
@@ -216,8 +230,9 @@ const ItemForm = () => {
                                 !!formik.errors.category
                             }
                             >
-                                <option selected value="1">Productos</option>
-                                <option value="2">Servicios</option>
+                                {selectCategories.map((option,i) => (
+                                  <option value={option.value} key={i}>{option.label}</option>
+                                ))}
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
                             {formik.errors.category}
@@ -232,7 +247,7 @@ const ItemForm = () => {
                         >
                             <Form.Select
                             name="subcategory"
-                            value={formik.values.subcategory || ""}
+                            value={formik.values.subcategory}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             isInvalid={
@@ -240,14 +255,12 @@ const ItemForm = () => {
                                 !!formik.errors.subcategory
                             }
                             >
-                                <option selected value="1">Leñeros/Braseros/Diablitos</option>
-                                <option value="2">Parrillas</option>
-                                <option value="3">A la cruz</option>
-                                <option value="4">Fogoneros</option>
-                                <option value="5">Asadores</option>
-                                <option value="6">Discos</option>
-                                <option value="7">Accesorios</option>
-                                <option value="8">Tablas</option>
+                              {
+                                  selectSubcategories.map((option,i) => (
+                                  <option value={option.value} key={i}>{option.label}</option>
+                                  ))
+                                }
+
                             </Form.Select>
                         </FloatingLabel>
                     </Col>
@@ -258,6 +271,7 @@ const ItemForm = () => {
                         id="createSwitchStock"
                         label="Producto en stock"
                         name="stock"
+                        checked={formik.values.stock}
                     />
                     <Row className="g-2">
                     <Col md>
@@ -289,4 +303,4 @@ const ItemForm = () => {
   );
 };
 
-export default ItemForm;
+export default EditForm;

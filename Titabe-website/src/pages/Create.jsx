@@ -1,5 +1,5 @@
 import MainNavbar from "../components/MainNavbar.jsx";
-import ItemForm from "../components/ItemForm.jsx";
+import CreateForm from "../components/CreateForm.jsx";
 import Footer from "../components/Footer.jsx";
 
 const Create = () => {
@@ -7,7 +7,7 @@ const Create = () => {
         <>
             <MainNavbar current={""}/>
             <div style={{paddingTop: '100px'}}>
-                <ItemForm/>
+                <CreateForm/>
             </div>
             <Footer/>
         </>

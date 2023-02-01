@@ -38,6 +38,7 @@ const storeController = {
 				//Incluir la tabla imagenes y obtener la principal
 				include: {
 							association: 'products_images',
+							association: 'subcategories'
 						}
 			})
 			if(!item) {
@@ -51,6 +52,11 @@ const storeController = {
       		res.status(500).json({ error: 'Could not connect to database'})
 		}     
     },
+
+	create: (req,res) => {
+		console.log(req.file.filename)
+		res.json(req.body)
+	}
 
 }
 
