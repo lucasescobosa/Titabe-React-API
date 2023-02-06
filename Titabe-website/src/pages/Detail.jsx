@@ -36,6 +36,7 @@ const Detail = () => {
     useEffect (() => {
         axios.get(`http://localhost:3001/api/store/detail/${id}`)
         .then((response)=> {
+            console.log(response)
             setItem(response.data)
             setMainImage(response.data.products_images[0].name)
         })

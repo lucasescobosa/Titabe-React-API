@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const path = require('path');
 const storeController = require('../controllers/storeController')
 
 const router = express.Router();
@@ -9,13 +10,11 @@ const storage = multer.diskStorage({
       cb(null, './images/products');
     },
     filename: (req, file, cb) => {
-      cb(
-        null,
-        new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname
-      );
+      cb(null, 'img-' + Date.now() + file.originalname);
     },
   });
-  const filefilter = (req, file, cb) => {
+
+const fileFilter = (req, file, cb) => {
     if (
       file.mimetype === 'image/png' ||
       file.mimetype === 'image/jpg' ||
@@ -26,12 +25,13 @@ const storage = multer.diskStorage({
       cb(null, false);
     }
   };
-  const upload = multer({ storage: storage, filefilter: filefilter });
+
+const upload = multer({ storage, fileFilter });
 
 router.get('/', storeController.allStore)
 router.get('/detail/:id', storeController.detail)
 
-router.post('/create',upload.single('mainImage'), storeController.create)
+router.post('/create', upload.fields([{name: 'mainImage', maxCount: 1} , {name: 'images' , maxCount: 3}]), storeController.create)
 
 
 module.exports = router;

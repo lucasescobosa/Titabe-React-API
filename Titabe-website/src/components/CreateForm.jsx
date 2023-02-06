@@ -68,6 +68,7 @@ const ItemForm = () => {
       category: 1,
       subcategory: 1,
       mainImage: '',
+      images: []
   },
     validationSchema: Yup.object().shape({
       name: Yup.string()
@@ -84,14 +85,20 @@ const ItemForm = () => {
         .required("Este campo es obligatorio"),
       price: Yup.number().required("Este campo es obligatorio"),
       discount: Yup.number().required("Este campo es obligatorio"),
+      mainImage: Yup.mixed().required('Imagen principal obligatoria')
     }),
 
     onSubmit: (values) => {
-      console.log(values)
       let formData = new FormData();
       for (let value in values) {
+      if(value!='images') {
         formData.append(value, values[value]);
       }
+      }
+      for(let i =0; i < values.images.length; i++) {
+        formData.append("images", values.images[i]);
+}
+      
       axios
         .post("http://localhost:3001/api/store/create", formData)
         .then((response) => {
@@ -303,18 +310,26 @@ const ItemForm = () => {
                     <Form.Group controlId="registerMainImage" className="mb-3">
                       <Form.Label>Imagen principal</Form.Label>
                       <Form.Control type="file" name="mainImage" accept='image/*'
+                      onBlur={formik.handleBlur}
+                      isInvalid={
+                          formik.touched.mainImage &&
+                          !!formik.errors.mainImage
+                      }
                         onChange={(e) =>
                           formik.setFieldValue('mainImage', e.currentTarget.files[0])
                         }
                         />
-                    </Form.Group>
-                    {/*<Form.Group controlId="registerImages" className="mb-3">
+                        <Form.Control.Feedback type="invalid">
+                            {formik.errors.mainImage}
+                            </Form.Control.Feedback>
+                      </Form.Group>
+                    <Form.Group controlId="registerImages" className="mb-3">
                       <Form.Label>Imagenes secundarias</Form.Label>
                       <Form.Control type="file" name="images" accept='image/*' multiple 
                           onChange={(e) =>
                           formik.setFieldValue('images', e.currentTarget.files)
                         }/>
-                      </Form.Group>*/}
+                      </Form.Group>
                     <Form.Check 
                     className="mb-4"
                         type="switch"
@@ -339,6 +354,7 @@ const ItemForm = () => {
                     variant="danger"
                     type="reset"
                     className="w-100"
+                    onClick={()=> formik.resetForm() }
                   >
                     BORRAR
                   </Button>
