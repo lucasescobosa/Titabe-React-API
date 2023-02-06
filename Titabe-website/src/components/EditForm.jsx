@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { useParams } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -12,18 +13,19 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormImage from "../assets/images/fire.jpg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const EditForm = ({initialValues , title}) => {
+const EditForm = ({initialValues}) => {
 
   let navigate = useNavigate();
+  const {id} = useParams();
 
   const selectCategories = [
     {value: 1, label: 'Productos'},
     {value: 2, label: 'Servicios'},
   ]
-
-  const selectSubcategories = [
+  
+  const selectSubcategories1 = [
     {value: 1, label: 'Leñeros/Braseros/Diablitos'},
     {value: 2, label: 'Parrillas'},
     {value: 3, label: 'A la cruz'},
@@ -32,10 +34,30 @@ const EditForm = ({initialValues , title}) => {
     {value: 6, label: 'Discos'},
     {value: 7, label: 'Accesorios'},
     {value: 8, label: 'Tablas'},
+  ]
+  
+  const selectSubcategories2 = [
     {value: 9, label: 'Alquileres'},
     {value: 10, label: 'Grabados'},
   ]
+  
+  const [selectSubcategories, setSelectSubcategories] = useState()
 
+  const changeSelectOption = (value) => {
+    let options = []
+    if(value == 1){
+      options = selectSubcategories1.map((option,i) => (
+        <option value={option.value} key={i}>{option.label}</option>
+        ))
+    }else {
+      options = selectSubcategories2.map((option,i) => (
+        <option value={option.value} key={i}>{option.label}</option>
+        ))
+    }
+    return options
+  }
+
+  useEffect(()=>{setSelectSubcategories(changeSelectOption(1))},[])
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -57,21 +79,17 @@ const EditForm = ({initialValues , title}) => {
     }),
 
     onSubmit: (values) => {
-      console.log(values);
       axios
-        .post("http://localhost:3001/api/store/create", values)
+        .put(`http://localhost:3001/api/store/edit/${id}`, values)
         .then((response) => {
           console.log(response);
           if (response.data === "Successful") {
-            alert("Producto correctamente creado!")
+            alert("Producto correctamente modificado!")
             navigate('/store')
           }
         })
         .catch((e) => {
             console.log(e)
-            if(e.response.data.error === 'product already exist'){
-                alert('El producto ya se encuentra creado')
-            }
         }
         );
     },
@@ -79,7 +97,6 @@ const EditForm = ({initialValues , title}) => {
 
   return (
     <div className="bg-light text-dark" style={{ padding: "5em 0" }}>
-      {console.log(initialValues)}
       <Container className="px-3 mx-auto">
         <Row className="justify-content-center">
           <Col md={12} lg={10} className="px-3">
@@ -96,7 +113,7 @@ const EditForm = ({initialValues , title}) => {
               <Col md={7} className="p-4 p-md-5">
                 <div className="d-flex justify-content-between">
                   <div className="w-60 text-start">
-                    <h3 className="mb-4">{title}</h3>
+                    <h3 className="mb-4">EDITAR PRODUCTO</h3>
                   </div>
                 </div>
                 <Form noValidate onSubmit={formik.handleSubmit}>
@@ -223,7 +240,10 @@ const EditForm = ({initialValues , title}) => {
                             <Form.Select
                             name="category"
                             value={formik.values.category}
-                            onChange={formik.handleChange}
+                            onChange={e => {
+                              formik.handleChange(e);
+                              setSelectSubcategories(changeSelectOption(e.target.value))}
+                            }
                             onBlur={formik.handleBlur}
                             isInvalid={
                                 formik.touched.category &&
@@ -254,24 +274,25 @@ const EditForm = ({initialValues , title}) => {
                                 formik.touched.subcategory &&
                                 !!formik.errors.subcategory
                             }
+                            
                             >
-                              {
-                                  selectSubcategories.map((option,i) => (
-                                  <option value={option.value} key={i}>{option.label}</option>
-                                  ))
+                             {  
+                                  selectSubcategories
                                 }
 
                             </Form.Select>
                         </FloatingLabel>
                     </Col>
                     </Row>
+                    
                     <Form.Check 
                     className="mb-4"
                         type="switch"
                         id="createSwitchStock"
                         label="Producto en stock"
                         name="stock"
-                        checked={formik.values.stock}
+                        defaultChecked={formik.values.stock}
+                        onChange={formik.handleChange}
                     />
                     <Row className="g-2">
                     <Col md>
@@ -288,6 +309,7 @@ const EditForm = ({initialValues , title}) => {
                     variant="danger"
                     type="reset"
                     className="w-100"
+                    onClick={()=> formik.resetForm() }
                   >
                     BORRAR
                   </Button>

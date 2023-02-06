@@ -74,6 +74,28 @@ const storeController = {
 		} catch(e) {
 			res.status(500).json({ error: e })
 		}
+	},
+
+	edit: async (req, res) => {
+		try {
+			console.log(req.body)
+			const product = await db.Product.update({
+				name : req.body.name,
+				descriptionShort : req.body.descriptionShort,
+				descriptionLong : req.body.descriptionLong,
+				price : parseInt(req.body.price),
+				subcategory_id : req.body.subcategory,
+				offer : parseInt(req.body.discount) !== 0 ? 1 : 0,
+				discount : parseInt(req.body.discount) !== 0 ? parseInt(req.body.discount) : 0,
+				stock : req.body.stock != undefined ? 1 : 0,
+			},{
+				where: { id : req.params.id	}
+			})
+			res.json('Successful')
+
+		} catch(e) {
+			res.status(500).json({ error: e })
+		}
 	}
 
 }

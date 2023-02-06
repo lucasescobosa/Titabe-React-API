@@ -1,7 +1,7 @@
 const express = require ("express")
 const morgan = require ('morgan') //logger
 const cors = require ('cors')
-const multer = require('multer');
+const methodOverride =  require('method-override'); // Para poder usar los métodos PUT y DELETE
 const db = require('./database/models')
 
 const app = module.exports = express()
@@ -11,8 +11,10 @@ const port = process.env.PORT || 3001
 process.env.NODE_ENV !== "prod" && app.use(morgan("dev"))
 
 app.use(express.json())
+app.use(methodOverride('_method'));
 app.use(cors({
-    origin: ['http://localhost:3000']
+    origin: ['http://localhost:3000'],
+    methods: 'GET, PUT, POST, DELETE'
 }))
 app.use(express.urlencoded({ extended: false }))
 

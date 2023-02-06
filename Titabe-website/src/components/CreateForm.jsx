@@ -14,7 +14,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormImage from "../assets/images/fire.jpg";
 import { useState, useEffect } from "react";
 
-const ItemForm = () => {
+const CreateForm = () => {
 
   let navigate = useNavigate();
 
@@ -370,4 +370,4 @@ const ItemForm = () => {
   );
 };
 
-export default ItemForm;
+export default CreateForm;

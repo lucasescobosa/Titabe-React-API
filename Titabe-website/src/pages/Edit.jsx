@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 import MainNavbar from "../components/MainNavbar.jsx";
-import ItemForm from "../components/CreateForm.jsx";
+import EditForm from "../components/EditForm.jsx";
 import Footer from "../components/Footer.jsx";
 
 const Edit = () => {
@@ -15,7 +15,6 @@ const Edit = () => {
     useEffect (() => {
         axios.get(`http://localhost:3001/api/store/detail/${id}`)
         .then((response)=> {
-            console.log(response)
             setInitialValues({
                 name: response.data.name,
                 descriptionShort: response.data.descriptionShort,
@@ -36,7 +35,7 @@ const Edit = () => {
         <>
             <MainNavbar current={""}/>
             <div style={{paddingTop: '100px'}}>
-                {isLoaded ? (<ItemForm initialValues={initialValues} title={'EDITAR UN PRODUCTO'}/>) : null }           
+                {isLoaded ? (<EditForm initialValues={initialValues}/>) : null }           
             </div>
             <Footer/>
         </>
