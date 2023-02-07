@@ -20,6 +20,8 @@ import Collapse from 'react-bootstrap/Collapse';
 
 const Store = () => {
 
+    const location = useLocation()
+
     const [items, setItems] = useState([])
     const [selectedCategory, setSelectedCategory] = useState()
 
@@ -31,6 +33,8 @@ const Store = () => {
         })
         .catch((e)=>console.log(e))
 
+        {(location.state)?setSelectedCategory(location.state.category):null}
+        
     }, [])
 
     const getFilteredItems = () => {
