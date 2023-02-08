@@ -37,14 +37,13 @@ const LoginForm = () => {
       axios
         .post("http://localhost:3001/api/users/login", values)
         .then((response) => {
-          console.log(response);
           if (!response.data.error) {
             alert("Inicio de sesión correcto!");
             localStorage.setItem("accessToken", response.data.token);
                 setCurrentUser({
                     email: response.data.email,
                     fullName: response.data.fullName, 
-                    id: response.data.id, 
+                    role_id: response.data.role_id, 
                     logged: true
                 });
             navigate("/");

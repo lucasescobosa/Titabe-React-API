@@ -43,13 +43,13 @@ const usersController = {
             const token = jwt.sign({
                 email: user.email,
                 fullName: user.fullName,
-                id: user.id
+                role_id: user.role_id
             }, 'titabesecret')
 
             res.json({
                 email: user.email,
                 fullName: user.fullName,
-                id: user.id,
+                role_id: user.role_id,
                 token
             })
         }
@@ -59,7 +59,7 @@ const usersController = {
         res.json({
             email: req.user.email,
             fullName: req.user.fullName,
-            id: req.user.id,
+            role_id: req.user.role_id,
         })
     }
     
