@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "titabe_db",
-    "host": "127.0.0.1",
+    "username": "uv76q8nxfln8htzf",
+    "password": "oSVJkiwUU0Xpt2VtXpRG",
+    "database": "bj5r3ai4octurmexsoyf",
+    "host": "bj5r3ai4octurmexsoyf-mysql.services.clever-cloud.com",
     "dialect": "mysql"
   },
   "test": {
