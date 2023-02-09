@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -22,6 +23,18 @@ const MainNavbar = (props) => {
       logged: false 
     })
     window.location.reload(false)
+  }
+
+  const [seachText, setSearchText] = useState("")
+  const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    setSearchText(e.target.value)
+  }
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate('/store', {state:{filter: seachText}})
+    setSearchText('')
   }
 
   return (
@@ -68,12 +81,15 @@ const MainNavbar = (props) => {
               </Nav.Link>
             )}
           </Nav>
-          <Form className="me-lg-2 mb-3 mb-lg-0">
+          <Form className="me-lg-2 mb-3 mb-lg-0" onSubmit={handleSearch}>
             <Form.Control
               type="search"
               placeholder="Busca tu producto..."
               className="me-2 text-bg-dark"
               aria-label="Search"
+              name="search"
+              value={seachText}
+              onChange={handleChange}  
             />
           </Form>
           <Nav>

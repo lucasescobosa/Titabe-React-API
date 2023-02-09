@@ -24,6 +24,7 @@ const Store = () => {
 
     const [items, setItems] = useState([])
     const [selectedCategory, setSelectedCategory] = useState()
+    const [searchFilter, setSearchFilter] = useState()
 
     useEffect (() => {
         axios.get('http://localhost:3001/api/store/')
@@ -32,19 +33,35 @@ const Store = () => {
             setItems(response.data)
         })
         .catch((e)=>console.log(e))
-
-        {(location.state)?setSelectedCategory(location.state.category):null}
         
     }, [])
 
+    useEffect (()=> {
+        if(location.state){
+            
+            if(location.state.category){
+                setSelectedCategory(location.state.category)}
+            
+            if(location.state.filter){
+                setSelectedCategory('')
+                setSearchFilter(location.state.filter)
+            }
+            }
+    }, [location.state])
+
     const getFilteredItems = () => {
-        if(!selectedCategory){
+        if(!selectedCategory && !searchFilter){
             return items
         }
-        return items.filter((item) => item.subcategory_id === selectedCategory)
+        else if(selectedCategory){
+            return items.filter((item) => item.subcategory_id === selectedCategory)
+        }
+        else if(searchFilter){
+            return items.filter((item) => item.name.toLowerCase().includes(searchFilter))
+        }
     }
 
-    var filteredItems = useMemo(getFilteredItems, [selectedCategory, items])
+    var filteredItems = useMemo(getFilteredItems, [selectedCategory, searchFilter, items])
 
     const handleFilters = (event) => {
         event.preventDefault()
