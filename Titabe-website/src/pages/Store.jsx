@@ -4,6 +4,7 @@ import axios from "axios";
 
 import StoreCard from "../components/StoreCard.jsx";
 import SideBar from "../components/SideBar.jsx";
+import SideBarCanvas from "../components/SidebarCanvas.jsx";
 import MainNavbar from "../components/MainNavbar.jsx";
 import Footer from "../components/Footer.jsx";
 
@@ -68,37 +69,29 @@ const Store = () => {
         setSelectedCategory(event.target.value)
     }
 
-    const [show, setShow] = useState(false);
-    const [open, setOpen] = useState(true);
-
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-
 
     return ( 
         <>
         <MainNavbar current={"store"}/>
             <div style={{paddingTop: '100px'}}>
                 <Container fluid className="bg-light">
-                    <Row className="mx-5">
+                    <Row className="mx-lg-5">
                         <SideBar handleFilters={handleFilters} selectedCategory={selectedCategory}/>
                         <Col xs={12} lg={9} className='ps-2'>
                             <div className="d-flex justify-content-between pt-3 pb-4 px-4 border-bottom border-secondary-subtle">
-                                <Button variant="secondary" className="" onClick={handleShow}>
-                                    Filtrar
-                                </Button>
+                                <div>
+                                <SideBarCanvas handleFilters={handleFilters} selectedCategory={selectedCategory}/>
+                                </div>
                                 <div className="d-flex">
                                     <p className="fs-6 m-auto pe-2">Ordenar por:</p>
                                     <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                        Dropdown Button
+                                        Seleccionar
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                        <Dropdown.Item href="#/action-1">Ofertas</Dropdown.Item>
+                                        <Dropdown.Item href="#/action-2">Precio: Mayor a Menor</Dropdown.Item>
+                                        <Dropdown.Item href="#/action-3">Precio: Menor a Mayor</Dropdown.Item>
                                     </Dropdown.Menu>
                                     </Dropdown>
                                 </div>

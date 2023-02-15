@@ -13,7 +13,7 @@ process.env.NODE_ENV !== "prod" && app.use(morgan("dev"))
 app.use(express.json())
 app.use(methodOverride('_method'));
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://vercel-deploy-rosy-beta.vercel.app/'],
     methods: 'GET, PUT, POST, DELETE'
 }))
 app.use(express.urlencoded({ extended: false }))

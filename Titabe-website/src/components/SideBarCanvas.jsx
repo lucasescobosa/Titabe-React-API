@@ -1,14 +1,25 @@
+import React, { useState } from 'react';
+import Button from "react-bootstrap/Button";
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
-import Col from "react-bootstrap/Col";
+const SideBarCanvas = ({handleFilters, selectedCategory}) => {
 
-const SideBar = ({handleFilters, selectedCategory}) => {
- 
-    return ( 
-        
-        <Col lg={3} className='pt-4 px-4 border-end border-secondary-subtle d-none d-lg-block'>
-            <p className="fs-4 fw-bold">Categorias</p>
-            <hr className="text-secondary"/>
-            <p className="fs-5 fw-semibold">Productos</p>
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+  
+    return (
+        <>
+        <Button variant="secondary" className="d-lg-none" onClick={handleShow}>
+            Filtrar
+        </Button>
+        <Offcanvas show={show} onHide={handleClose}>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Categorías</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+          <p className="fs-5 fw-semibold">Productos</p>
             <ul className="list-unstyled mb-4">
                 { selectedCategory===1 
                 ?<li className="my-2 text-warning" value={1} onClick={handleFilters} style={{cursor: 'pointer'}}>Leñeros/Braseros/Diablitos</li>
@@ -55,8 +66,10 @@ const SideBar = ({handleFilters, selectedCategory}) => {
                 :<li className="my-2 text-secondary" value={10} onClick={handleFilters} style={{cursor: 'pointer'}}>Grabados</li>
                 }
             </ul>
-        </Col>
-     );
-}
+          </Offcanvas.Body>
+        </Offcanvas>
+        </>
+    );
+  }
  
-export default SideBar;
+export default SideBarCanvas;
