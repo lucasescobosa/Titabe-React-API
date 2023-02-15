@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import UserContext from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import {LinkContainer} from 'react-router-bootstrap'
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -118,6 +119,16 @@ const MainNavbar = (props) => {
                   <NavDropdown.Item onClick={logout}>
                     Cerrar Sesión
                   </NavDropdown.Item>
+                  
+                  {(currentUser.role_id == 1 || currentUser.role_id == 2) ? (
+                      <LinkContainer to='/create'>
+                        <NavDropdown.Item>
+                        Crear Producto
+                        </NavDropdown.Item>
+                      </LinkContainer>
+                  ) : (null)
+                  }
+
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     {currentUser.fullName}

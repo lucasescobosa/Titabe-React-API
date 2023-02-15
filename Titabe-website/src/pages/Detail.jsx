@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../components/UserContext";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Detail.css'
 import MainNavbar from "../components/MainNavbar.jsx";
+import {LinkContainer} from 'react-router-bootstrap'
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -15,7 +17,8 @@ import Form from 'react-bootstrap/Form';
 
 const Detail = () => {
     const {id} = useParams();
-    
+    let navigate = useNavigate();
+    const { currentUser, setCurrentUser } = useContext(UserContext);
     const [item, setItem] = useState({
         id: null,
         name: null,
@@ -48,6 +51,22 @@ const Detail = () => {
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
     };
+
+    const handleDelete = () => {
+        axios
+          .delete(`http://localhost:3001/api/store/delete/${id}`)
+          .then((response) => {
+            console.log(response);
+            if (response.data === "Successful") {
+              alert("Producto correctamente eliminado!")
+              navigate('/store')
+            }
+          })
+          .catch((e) => {
+              console.log(e)
+          }
+          );
+      }
 
     return ( 
         <>
@@ -100,6 +119,13 @@ const Detail = () => {
                                     <Button variant="outline-dark" className="w-50 p-2">Comprar ahora</Button>
                                     <Button variant="warning" className="w-50 p-2">Agregar al carrito</Button>
                                 </div>
+                                {(currentUser.role_id == 1 || currentUser.role_id == 2) ? (
+                                    <div className="buttons d-flex flex-row mt-4 gap-2">
+                                    <LinkContainer to={`/edit/${id}`}><Button variant="success" className="w-50 p-2">Editar</Button></LinkContainer>
+                                    <Button variant="danger" className="w-50 p-2" onClick={handleDelete}>Eliminar</Button>
+                                    </div>
+                                    ) : (null)
+                                }
                             </div>
                             <ul className="mt-4">
                                 {descriptionItems.map((item, i) => {
