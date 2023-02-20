@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Dotenv = require("dotenv-webpack");
 const path = require('path')
 const { argv } = require('process')
 
@@ -10,14 +11,15 @@ module.exports = (env, argv) => {
         //entry: "./src/index.js",
         output: {
             path: path.resolve(__dirname, 'dist/'),
-            filename: isProduction ? '[name].[contenthash].js' : 'bundle.js',
+            filename: 'bundle.js',
             publicPath: '/'
         },
         plugins: [
             new HtmlWebpackPlugin({ 
               template: 'public/index.html',
               favicon: './src/assets/images/isotype-logo-white.png'
-            })
+            }),
+            new Dotenv({systemvars: true,}),
         ],
         module: {
             rules: [

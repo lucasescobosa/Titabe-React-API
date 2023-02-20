@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom'
+
 import Container from "react-bootstrap/Container";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Ratio from 'react-bootstrap/Ratio'
 import Image from 'react-bootstrap/Image'
-import { Link } from 'react-router-dom'
 import imgCat1 from '../assets/images/products/cat1.png'
 import imgCat2 from '../assets/images/products/cat2.png'
 import imgCat3 from '../assets/images/products/cat3.png'

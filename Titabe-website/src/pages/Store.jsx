@@ -7,16 +7,14 @@ import SideBar from "../components/SideBar.jsx";
 import SideBarCanvas from "../components/SidebarCanvas.jsx";
 import MainNavbar from "../components/MainNavbar.jsx";
 import Footer from "../components/Footer.jsx";
+import { useFilters } from "../hooks/useFilters.js";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import Dropdown from 'react-bootstrap/Dropdown';
-import Figure from 'react-bootstrap/Figure';
-import Card from 'react-bootstrap/Card';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import Collapse from 'react-bootstrap/Collapse';
+import Form from 'react-bootstrap/Form';
+
 
 
 const Store = () => {
@@ -24,80 +22,62 @@ const Store = () => {
     const location = useLocation()
 
     const [items, setItems] = useState([])
+    const { filters, setFilters, filterItems } = useFilters()
+
     const [selectedCategory, setSelectedCategory] = useState()
     const [searchFilter, setSearchFilter] = useState()
 
     useEffect (() => {
-        axios.get('http://localhost:3001/api/store/')
+        axios.get(`${process.env.SERVER_URI}/api/store/`)
         .then((response)=> {
-            console.log(response)
             setItems(response.data)
         })
-        .catch((e)=>console.log(e))
-        
+        .catch((e)=>console.log(e))  
     }, [])
+
+    
+    const filteredItems = filterItems(items)
 
     useEffect (()=> {
         if(location.state){
             
             if(location.state.category){
-                setSelectedCategory(location.state.category)}
+                setFilters({...filters, category: location.state.category})}
             
             if(location.state.filter){
-                setSelectedCategory('')
-                setSearchFilter(location.state.filter)
+                setFilters({...filters, category: null, search: location.state.filter})}
             }
-            }
+            
     }, [location.state])
-
-    const getFilteredItems = () => {
-        if(!selectedCategory && !searchFilter){
-            return items
-        }
-        else if(selectedCategory){
-            return items.filter((item) => item.subcategory_id === selectedCategory)
-        }
-        else if(searchFilter){
-            return items.filter((item) => item.name.toLowerCase().includes(searchFilter))
-        }
-    }
-
-    var filteredItems = useMemo(getFilteredItems, [selectedCategory, searchFilter, items])
-
-    const handleFilters = (event) => {
-        event.preventDefault()
-        setSelectedCategory(event.target.value)
-    }
-
 
     return ( 
         <>
+        {console.log(filters)}
         <MainNavbar current={"store"}/>
             <div style={{paddingTop: '100px'}}>
                 <Container fluid className="bg-light">
                     <Row className="mx-lg-5">
-                        <SideBar handleFilters={handleFilters} selectedCategory={selectedCategory}/>
+                        <SideBar/>
                         <Col xs={12} lg={9} className='ps-2'>
-                            <div className="d-flex justify-content-between pt-3 pb-4 px-4 border-bottom border-secondary-subtle">
+                            <div className="d-flex justify-content-between py-3 px-sm-4 border-bottom border-secondary-subtle">
                                 <div>
-                                <SideBarCanvas handleFilters={handleFilters} selectedCategory={selectedCategory}/>
+                                <SideBarCanvas/>
                                 </div>
-                                <div className="d-flex">
-                                    <p className="fs-6 m-auto pe-2">Ordenar por:</p>
-                                    <Dropdown>
-                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                        Seleccionar
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item href="#/action-1">Ofertas</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-2">Precio: Mayor a Menor</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-3">Precio: Menor a Mayor</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                    </Dropdown>
+                                <div className="d-flex flex-wrap align-items-center justify-content-end">
+                                    <div><label htmlFor="filterSort" className="pe-2">Ordenar por:</label></div>
+                                    <div>
+                                        <Form onChange={(e)=>{setFilters({...filters, order: e.target.value})}}>
+                                        <Form.Select size="sm" id="filterSort">
+                                            <option value="offers">Ofertas</option>
+                                            <option value="priceAsc">Precio: Menor a Mayor</option>
+                                            <option value="priceDesc">Precio: Mayor a Menor</option>
+                                        </Form.Select>
+                                        </Form>
+                                    </div>
                                 </div>
                             </div>
                             <Row className="p-4">
-                            {filteredItems.map((item, i) => (<StoreCard {...item} key={i}/>))}
+                                <StoreCard items={filteredItems}/>
                             </Row>
                         </Col>
                     </Row>

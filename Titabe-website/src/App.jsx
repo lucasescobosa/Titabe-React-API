@@ -1,6 +1,7 @@
 import { Navigate,Route, Routes} from 'react-router-dom'
 import { useContext } from "react";
 import UserContext, { UserContextProvider } from './components/UserContext.js';
+import { FiltersProvider } from './components/FiltersContext.jsx';
 import axios from 'axios';
 
 import Home from './pages/Home.jsx';
@@ -10,6 +11,7 @@ import Store from './pages/Store.jsx';
 import Detail from './pages/Detail.jsx';
 import Create from './pages/Create.jsx';
 import Edit from './pages/Edit.jsx'
+import Cart from './pages/Cart.jsx';
 
 import './App.css'
 
@@ -17,10 +19,12 @@ const App = () => {
   return(
     <div className='bg-dark'>
       <UserContextProvider>
+        <FiltersProvider>
           <Routes>
             <Route path='/' element={<Home/>} />
             <Route path='/store' element={<Store/>} />
             <Route path='/detail/:id' element={<Detail/>} />
+            <Route path='/cart' element={<Cart/>} />
 
             {/*Routes for logged out*/}
             <Route path='/login' element={<RequireUser><Login/></RequireUser>} />
@@ -31,6 +35,7 @@ const App = () => {
             <Route path='/edit/:id' element={<RequireAdmin><Edit/></RequireAdmin>} />
 
           </Routes>
+          </FiltersProvider>
       </UserContextProvider>
     </div>
   );

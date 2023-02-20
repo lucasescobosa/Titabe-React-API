@@ -10,6 +10,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
+import { CartIcon } from "./Icons.jsx";
 import titabeLogo from "../assets/images/logowhite.png";
 
 const MainNavbar = (props) => {
@@ -139,17 +140,11 @@ const MainNavbar = (props) => {
                   Iniciar Sesión
                 </Button>
               )}
-              <Button variant="warning">
-                <svg
-                  className="bi pe-none"
-                  width="22"
-                  height="22"
-                  fill="black"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM6.5 7h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1 0-1z" />
-                </svg>
-              </Button>
+              <LinkContainer to='/cart'>
+                <Button variant="warning">
+                  <CartIcon/>
+                </Button>
+              </LinkContainer>
             </div>
           </Nav>
         </Navbar.Collapse>
