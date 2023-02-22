@@ -2,6 +2,7 @@ import { Navigate,Route, Routes} from 'react-router-dom'
 import { useContext } from "react";
 import UserContext, { UserContextProvider } from './components/UserContext.js';
 import { FiltersProvider } from './components/FiltersContext.jsx';
+import { CartProvider } from './components/CartContext.jsx';
 import axios from 'axios';
 
 import Home from './pages/Home.jsx';
@@ -19,6 +20,7 @@ const App = () => {
   return(
     <div className='bg-dark'>
       <UserContextProvider>
+        <CartProvider>
         <FiltersProvider>
           <Routes>
             <Route path='/' element={<Home/>} />
@@ -36,6 +38,7 @@ const App = () => {
 
           </Routes>
           </FiltersProvider>
+          </CartProvider>
       </UserContextProvider>
     </div>
   );

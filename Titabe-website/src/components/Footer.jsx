@@ -1,7 +1,10 @@
 import titabeLogo from '../assets/images/logowhite.png'
+import { useCart } from "../hooks/useCart.js"
 
 const Footer = () => {
+    const { cart } = useCart()
     return ( 
+        
         <div className="p-3 text-bg-dark">
             <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top ">
             <p className="col-md-4 mb-0 text-muted">&copy; 2022 TITABÉ - Todos los derechos reservados</p>

@@ -52,7 +52,6 @@ const Store = () => {
 
     return ( 
         <>
-        {console.log(filters)}
         <MainNavbar current={"store"}/>
             <div style={{paddingTop: '100px'}}>
                 <Container fluid className="bg-light">

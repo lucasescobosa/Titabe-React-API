@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../hooks/useCart.js"
 import './StoreCard.css'
 
 import Col from "react-bootstrap/Col";
@@ -6,11 +7,7 @@ import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
 
 const StoreCard = ({items}) => {
-    let navigate = useNavigate();
-
-    const handleButtonClick = () => {
-        navigate(`/`)
-    }
+    const { addToCart } = useCart()
 
     return ( 
         <>
@@ -24,7 +21,7 @@ const StoreCard = ({items}) => {
                         <Card.Subtitle className="card-product-subtitle mb-3 text-muted">{item.descriptionShort}</Card.Subtitle>
                         <Card.Text className="card-product-price fs-2 fw-bold mb-0">${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Card.Text>
                         <Card.Text className="mt-0 fs-6 text-muted fw-light"><em>(exclusivo vía transferencia)</em></Card.Text>
-                        <Button onClick={handleButtonClick} variant="outline-warning" className="w-100 mt-auto" style={{zIndex: 2, position: 'relative'}}>Agregar al carrito</Button>
+                        <Button onClick={() => addToCart(item)} variant="outline-warning" className="w-100 mt-auto" style={{zIndex: 2, position: 'relative'}}>Agregar al carrito</Button>
                     </Card.Body>
                     <Link to={`/detail/${item.id}`} className='stretched-link'/>
                 </Card>
