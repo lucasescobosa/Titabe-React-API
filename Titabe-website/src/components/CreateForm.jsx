@@ -100,7 +100,7 @@ const CreateForm = () => {
 }
       
       axios
-        .post("http://localhost:3001/api/store/create", formData)
+        .post(`${process.env.SERVER_URI}/api/store/create`, formData)
         .then((response) => {
           console.log(response);
           if (response.data === "Successful") {

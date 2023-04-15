@@ -2,41 +2,43 @@ import { useCart } from "../hooks/useCart.js"
 import { MinusIcon, PlusIcon, CrossIcon } from './Icons.jsx';
 
 import Image from 'react-bootstrap/Image'
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const CartCard = () => {
 
-    const { cart, addToCart, clearCart } = useCart()
+    const { cart, addToCart, removeFromCart, decreaseFromCart } = useCart()
 
     return (
         <>
         {cart.map((item, i) => {
             return(
-                <div className="row mb-4 d-flex justify-content-between align-items-center" key={i}>
-                <div className="col-md-2 col-lg-2 col-xl-2">
-                    <Image src={`${process.env.SERVER_URI}/images/products/${item.products_images[0].name}`} style={{height: '150px', objectFit: 'contain'}} alt={item.name} />
-                </div>
-                <div className="col-md-3 col-lg-3 col-xl-3">
-                    <h6 className="text-muted">Accesorios</h6>
+                <Row className="mb-4 d-flex justify-content-between align-items-center" key={i}>
+                <Col sm={12} md={2}>
+                    <Image src={`${process.env.SERVER_URI}/images/products/${item.products_images[0].name}`} style={{width: '100%', objectFit: 'contain'}} alt={item.name} />
+                </Col>
+                <Col sm={12} md={4} className='text-center'>
+                    <h6 className="text-muted">{item.subcategories.name}</h6>
                     <h6 className="text-black mb-0">{item.name}</h6>
-                </div>
-                <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                    <button className="btn btn-link px-2">
+                </Col>
+                <Col sm={12} md={3} className="d-flex justify-content-center">
+                    <button className="btn btn-link px-2" onClick={()=>{(item.quantity > 1) ? decreaseFromCart(item) : null}}>
                     <MinusIcon/>
                     </button>
 
                     <p className='text-center my-auto fw-semibold'>Cant: {item.quantity}</p>
 
-                    <button className="btn btn-link px-2">
+                    <button className="btn btn-link px-2" onClick={()=>{addToCart(item)}}>
                     <PlusIcon/>
                     </button>
-                </div>
-                <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                    <h6 className="mb-0">${(item.price * item.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</h6>
-                </div>
-                <div className="col-md-1 col-lg-1 col-xl-1 text-end">
-                    <a href="#!" className="text-muted"><CrossIcon/></a>
-                </div>
-                </div>
+                </Col>
+                <Col sm={12} md={2} className='text-center'>
+                    <h5 className="mb-0">${(item.price * item.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</h5>
+                </Col> 
+                <Col sm={12} md={1} className="text-end">
+                    <button className="btn btn-link" onClick={()=>{removeFromCart(item)}}><CrossIcon/></button>
+                </Col>
+                </Row>
             )
         }
         )}

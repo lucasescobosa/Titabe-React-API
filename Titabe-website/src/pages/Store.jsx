@@ -42,10 +42,12 @@ const Store = () => {
         if(location.state){
             
             if(location.state.category){
-                setFilters({...filters, category: location.state.category})}
+                setFilters({...filters, category: location.state.category, search: null})}
+                window.history.replaceState({}, document.title)
             
             if(location.state.filter){
                 setFilters({...filters, category: null, search: location.state.filter})}
+                window.history.replaceState({}, document.title)
             }
             
     }, [location.state])

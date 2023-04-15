@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import UserContext from "./UserContext";
 import { useNavigate } from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap'
+import { useCart } from "../hooks/useCart.js"
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -15,6 +16,9 @@ import titabeLogo from "../assets/images/logowhite.png";
 
 const MainNavbar = (props) => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { cart } = useCart()
+    
+  const totalItems = cart.reduce(function(acum, obj){ return acum + obj.quantity }, 0)
 
   const logout = () => {
     localStorage.removeItem("accessToken")
@@ -54,7 +58,7 @@ const MainNavbar = (props) => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto mb-lg-0 flex-row justify-content-center">
+          <Nav className="me-auto mb-lg-0 flex-row justify-content-center flex-wrap">
             {props.current === "home" ? (
               <Nav.Link href="/" className="px-2 text-warning">
                 INICIO
@@ -80,6 +84,24 @@ const MainNavbar = (props) => {
             ) : (
               <Nav.Link href="/contact" className="px-2 text-white">
                 CONTACTO
+              </Nav.Link>
+            )}
+            {props.current === "aboutus" ? (
+              <Nav.Link href="/aboutus" className="px-2 text-warning">
+                NOSOTROS
+              </Nav.Link>
+            ) : (
+              <Nav.Link href="/aboutus" className="px-2 text-white">
+                NOSOTROS
+              </Nav.Link>
+            )}
+            {props.current === "faqs" ? (
+              <Nav.Link href="/faqs" className="px-2 text-warning">
+                AYUDA
+              </Nav.Link>
+            ) : (
+              <Nav.Link href="/faqs" className="px-2 text-white">
+                AYUDA
               </Nav.Link>
             )}
           </Nav>
@@ -141,8 +163,11 @@ const MainNavbar = (props) => {
                 </Button>
               )}
               <LinkContainer to='/cart'>
-                <Button variant="warning">
+                <Button variant="warning" className="position-relative">
                   <CartIcon/>
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {totalItems}
+                  </span>
                 </Button>
               </LinkContainer>
             </div>

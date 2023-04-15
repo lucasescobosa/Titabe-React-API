@@ -15,7 +15,7 @@ const Cart = () => {
     const { cart, addToCart, clearCart } = useCart()
     
     const totalItems = cart.reduce(function(acum, obj){ return acum + obj.quantity }, 0)
-    console.log(cart)
+    const subtotalPrice = cart.reduce(function(acum, obj){ return acum + (obj.quantity * obj.price) }, 0)
 
     return (
         <>
@@ -53,17 +53,15 @@ const Cart = () => {
                         
                                             <div className="d-flex justify-content-between mb-4">
                                             <h5 className="text-uppercase">subtotal</h5>
-                                            <h5>$ 27.238</h5>
+                                            <h5>${subtotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</h5>
                                             </div>
                         
-                                            <h5 className="text-uppercase mb-3">Envío</h5>
+                                            <h5 className=" mb-3">Envío GRATIS a toda Argentina</h5>
                         
                                             <div className="mb-4 pb-2">
                                             <select className="form-select">
-                                                <option value="1">Retiro por tienda</option>
-                                                <option value="2">Envío a domicilio</option>
-                                                <option value="3">Envío por correo</option>
-                                                <option value="4">Otro</option>
+                                                <option value="1">Retiro por tienda (Córdoba Capital)</option>
+                                                <option value="2">Envío a domicilio mediante Correo Argentino</option>
                                             </select>
                                             </div>
                         
@@ -72,7 +70,7 @@ const Cart = () => {
                                             <div className="mb-4 pb-2">
                                                 <select className="form-select">
                                                 <option value="1">Transferencia</option>
-                                                <option value="2">Efectivo</option>
+                                                <option value="2">Efectivo (solo Córdoba)</option>
                                                 <option value="3">Tarjeta de crédito</option>
                                                 </select>
                                             </div>
@@ -81,10 +79,10 @@ const Cart = () => {
                         
                                             <div className="d-flex justify-content-between mb-5">
                                             <h5 className="text-uppercase">precio total</h5>
-                                            <h5>$102.000</h5>
+                                            <h5>$</h5>
                                             </div>
                         
-                                            <button type="button" className="btn btn-warning btn-block w-100 btn-lg" onClick={clearCart}>Ir al pago</button>
+                                            <button type="button" className="btn btn-warning btn-block w-100 btn-lg" onClick={clearCart}>Confirmar pedido</button>
                         
                                         </div>
                                         </Col>

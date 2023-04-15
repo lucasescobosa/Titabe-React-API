@@ -13,7 +13,7 @@ const Edit = () => {
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect (() => {
-        axios.get(`http://localhost:3001/api/store/detail/${id}`)
+        axios.get(`${process.env.SERVER_URI}/api/store/detail/${id}`)
         .then((response)=> {
             setInitialValues({
                 name: response.data.name,

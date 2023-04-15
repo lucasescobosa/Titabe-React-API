@@ -17,7 +17,6 @@ const reducer = (state, action) => {
             const productIndex = state.findIndex((item) => item.id === id)
 
             if(productIndex >= 0) {
-                console.log('index encontrado')
                 const newCart = structuredClone(state)
                 newCart[productIndex].quantity += 1
                 updateLocalStorage(newCart)
@@ -32,6 +31,18 @@ const reducer = (state, action) => {
             ]
             updateLocalStorage(newCart)
             return newCart
+        }
+        case 'DECREASE_FROM_CART': {
+            const { id } = action.payload
+            const productIndex = state.findIndex((item) => item.id === id)
+
+            if(productIndex >= 0) {
+                const newCart = structuredClone(state)
+                newCart[productIndex].quantity -= 1
+                updateLocalStorage(newCart)
+                return newCart
+            }
+            return
         }
         case 'REMOVE_FROM_CART': {
             const { id } = action.payload
@@ -57,6 +68,13 @@ export const CartProvider = ({children}) => {
         })
     }
 
+    const decreaseFromCart = (product) => {
+        dispatch({
+            type: 'DECREASE_FROM_CART',
+            payload: product
+        })
+    }
+
     const removeFromCart = (product) => {
         dispatch({
             type: 'REMOVE_FROM_CART',
@@ -67,7 +85,7 @@ export const CartProvider = ({children}) => {
     const clearCart = () => dispatch({ type: 'CLEAR_CART' })
 
     return (
-        <CartContext.Provider value={{ cart: state, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ cart: state, addToCart, decreaseFromCart, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>
     )

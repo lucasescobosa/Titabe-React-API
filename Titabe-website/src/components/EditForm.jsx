@@ -80,7 +80,7 @@ const EditForm = ({initialValues}) => {
 
     onSubmit: (values) => {
       axios
-        .put(`http://localhost:3001/api/store/edit/${id}`, values)
+        .put(`${process.env.SERVER_URI}/api/store/edit/${id}`, values)
         .then((response) => {
           console.log(response);
           if (response.data === "Successful") {

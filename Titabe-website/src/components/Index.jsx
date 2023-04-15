@@ -18,11 +18,20 @@ import imgCat10 from '../assets/images/products/cat10.png'
 
 const Home = () => {
     return ( 
-        <Container fluid className="my-3">
+        <Container fluid className="my-3 px-0" style={{maxWidth: '1600px'}}>
             <Row className="g-0">
                 <Col md={6} className='index-item'>
-                        
                     <Ratio aspectRatio={50}>
+                        <>
+                        <Image rounded fluid src={imgCat2} className="p-2 index-picture" alt="parrillas"/>
+                        <Link to='/store' state={{category: 2}}>
+                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">COMBOS PARA EL ASADOR - PARRILLAS</p>
+                        </Link>
+                        </>
+                    </Ratio> 
+                </Col>
+                <Col xs={6} md={3} className='index-item'>
+                    <Ratio aspectRatio={'1x1'}>
                         <>
                         <Image rounded fluid src={imgCat4} className="p-2 index-picture" alt="fogonero"/>
                         <Link to='/store' state={{category: 4}}>
@@ -30,18 +39,19 @@ const Home = () => {
                         </Link>
                         </>
                     </Ratio>
-                        
                 </Col>
                 <Col xs={6} md={3} className='index-item'>
                     <Ratio aspectRatio={'1x1'}>
                         <>
-                        <Image rounded fluid src={imgCat5} className="p-2 index-picture" alt="asadores"/>
-                        <Link to='/store' state={{category: 5}}>
-                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">ASADORES</p>
+                        <Image rounded fluid src={imgCat8} className="p-2 index-picture" alt="tablas"/>
+                        <Link to='/store' state={{category: 8}}>
+                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">TABLAS</p>
                         </Link>
                         </>
                     </Ratio>
                 </Col>
+            </Row>
+            <Row className="g-0">
                 <Col xs={6} md={3} className='index-item'>
                     <Ratio aspectRatio={'1x1'}>
                         <>
@@ -50,10 +60,9 @@ const Home = () => {
                         <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">CRUCES</p>
                         </Link>
                         </>
+                        
                     </Ratio>
                 </Col>
-            </Row>
-            <Row className="g-0">
                 <Col xs={6} md={3} className='index-item'>
                     <Ratio aspectRatio={'1x1'}>
                         <>
@@ -64,38 +73,18 @@ const Home = () => {
                         </>
                     </Ratio>
                 </Col>
-                <Col xs={6} md={3} className='index-item'>
-                    <Ratio aspectRatio={'1x1'}>
-                        <>
-                        <Image rounded fluid src={imgCat1} className="p-2 index-picture" alt="leñeros"/>
-                        <Link to='/store' state={{category: 1}}>
-                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">LEÑEROS</p>
-                        </Link>
-                        </>
-                    </Ratio>
-                </Col>
                 <Col md={6} className='index-item'>
                     <Ratio aspectRatio={50}>
                         <>
-                        <Image rounded fluid src={imgCat2} className="p-2 index-picture" alt="parrillas"/>
-                        <Link to='/store' state={{category: 2}}>
-                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">PARRILLAS</p>
+                        <Image rounded fluid src={imgCat1} className="p-2 index-picture" alt="leñeros"/>
+                        <Link to='/store' state={{category: 1}}>
+                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">LEÑEROS Y DIABLITOS</p>
                         </Link>
                         </>
                     </Ratio>
                 </Col>
             </Row>
             <Row className="g-0">
-                <Col md={6} className='index-item'>
-                    <Ratio aspectRatio={50}>
-                        <>
-                        <Image rounded fluid src={imgCat8} className="p-2 index-picture" alt="tablas"/>
-                        <Link to='/store' state={{category: 8}}>
-                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">TABLAS</p>
-                        </Link>
-                        </>
-                    </Ratio>
-                </Col>
                 <Col md={6} className='index-item'>
                     <Ratio aspectRatio={50}>
                         <>
@@ -106,24 +95,22 @@ const Home = () => {
                         </>
                     </Ratio>
                 </Col>
-            </Row>
-            <Row className="g-0">
-                <Col md={6} className='index-item'>
-                    <Ratio aspectRatio={50}>
-                        <>
-                        <Image rounded fluid src={imgCat9} className="p-2 index-picture" alt="alquileres"/>
-                        <Link to='/store' state={{category: 9}}>
-                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">ALQUILERES</p>
-                        </Link>
-                        </>
-                    </Ratio>
-                </Col>
-                <Col md={6} className='index-item'>
-                    <Ratio aspectRatio={50}>
+                <Col xs={6} md={3} className='index-item'>
+                    <Ratio aspectRatio={'1x1'}>
                         <>
                         <Image rounded fluid src={imgCat10} className="p-2 index-picture" alt="grabados"/>
                         <Link to='/store' state={{category: 10}}>
                         <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">GRABADOS</p>
+                        </Link>
+                        </>
+                    </Ratio>
+                </Col>
+                <Col xs={6} md={3} className='index-item'>
+                    <Ratio aspectRatio={'1x1'}>
+                        <>
+                        <Image rounded fluid src={imgCat9} className="p-2 index-picture" alt="alquileres"/>
+                        <Link to='/store' state={{category: 9}}>
+                        <p className="position-absolute bottom-0 start-0 p-4 text-light fs-2 index-title">ALQUILERES</p>
                         </Link>
                         </>
                     </Ratio>

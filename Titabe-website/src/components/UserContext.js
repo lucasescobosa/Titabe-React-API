@@ -14,7 +14,7 @@ export const UserContextProvider = ({children}) => {
 
     useEffect(()=>{
 
-    axios.get('http://localhost:3001/api/users/login', { headers: {accessToken: localStorage.getItem('accessToken')}})
+    axios.get(`${process.env.SERVER_URI}/api/users/login`, { headers: {accessToken: localStorage.getItem('accessToken')}})
     .then((response => {
         if(!response.data.error){
             setCurrentUser({

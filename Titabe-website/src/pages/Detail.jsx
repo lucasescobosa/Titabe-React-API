@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Detail.css'
 import MainNavbar from "../components/MainNavbar.jsx";
+import { useCart } from "../hooks/useCart.js"
 import {LinkContainer} from 'react-router-bootstrap'
 
 import Container from "react-bootstrap/Container";
@@ -14,6 +15,8 @@ import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Carousel from 'react-bootstrap/Carousel';
 import Form from 'react-bootstrap/Form';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 const Detail = () => {
     const {id} = useParams();
@@ -29,7 +32,7 @@ const Detail = () => {
         offer: null,
         stock: null
     })
-
+    const { addToCart } = useCart()
     let descriptionItems = item.descriptionLong.split('\n')
 
     const [mainImage, setMainImage] = useState(null)
@@ -37,7 +40,7 @@ const Detail = () => {
     const [cuotas, setCuotas] = useState(6)
 
     useEffect (() => {
-        axios.get(`http://localhost:3001/api/store/detail/${id}`)
+        axios.get(`${process.env.SERVER_URI}/api/store/detail/${id}`)
         .then((response)=> {
             console.log(response)
             setItem(response.data)
@@ -54,7 +57,7 @@ const Detail = () => {
 
     const handleDelete = () => {
         axios
-          .delete(`http://localhost:3001/api/store/delete/${id}`)
+          .delete(`${process.env.SERVER_URI}/api/store/delete/${id}`)
           .then((response) => {
             console.log(response);
             if (response.data === "Successful") {
@@ -81,7 +84,7 @@ const Detail = () => {
                                 {item.products_images.map((image, i)=>{ 
                                     return(
                                         <Carousel.Item key={i}>
-                                            <img src={`http://localhost:3001/images/products/${image.name}`} id="main_product_image" width="100%"/>
+                                            <img src={`${process.env.SERVER_URI}/images/products/${image.name}`} id="main_product_image" width="100%"/>
                                         </Carousel.Item>
                                         )
                                 })}
@@ -92,32 +95,47 @@ const Detail = () => {
                                 <Breadcrumb>
                                     <Breadcrumb.Item href="/" className="link-warning">Home</Breadcrumb.Item>
                                     <Breadcrumb.Item href="/store" className="link-warning">Store</Breadcrumb.Item>
-                                    <Breadcrumb.Item href="/store" className="link-warning">Parrillas</Breadcrumb.Item>
+                                    <Breadcrumb.Item active>{(item.subcategories)?item.subcategories.name:null}</Breadcrumb.Item>
                                 </Breadcrumb>
                                 <h1 className="detail-title mb-4">{item.name}</h1>
-                                <div className="d-flex aligns-items-center justify-content-start border-start border-bottom p-2">
-                                    <h1 className="detail-price text-warning">${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</h1>
-                                    <p className="ms-3 my-auto text-muted"><em>precio exclusivo via transferencia</em></p>
-                                </div>
-                                <div className="d-flex flex-column aligns-items-center justify-content-start border-start border-bottom p-2 my-3">
-                                    <div>
-                                        <h6><em>Comprá con tu tarjeta favorita en:</em></h6>
-                                    </div>
-                                    <div className="d-flex ">
-                                    <Form.Select onChange={(e)=>{setCuotas(e.target.value)}} style={{width:'auto'}}>
-                                    <option value="6">6</option>
-                                    <option value="3">3</option>
-                                    </Form.Select>
-                                        <h4 className="m-auto mx-2">Cuotas sin interés de:</h4>
-                                        <h2 className="detail-price my-auto">${(Math.round(item.price * 1.6 / cuotas)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</h2>
-                                    </div>
-                                </div>
-                                <ul className="mt-4">
-                                    {/*map descriptionlong*/}
-                                </ul>
+                                <h6>Elegí tu medio de pago preferido:</h6>
+                                <Tabs
+                                    defaultActiveKey="transferencia"
+                                    id="uncontrolled-tab-example"
+                                    className="mb-3"
+                                    >
+                                    <Tab eventKey="transferencia" title="Transferencia">
+                                        <div className="d-flex aligns-items-center justify-content-start border-start border-bottom p-2">
+                                            <h1 className="detail-price text-warning">${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</h1>
+                                            <p className="ms-3 my-auto text-muted"><em>precio exclusivo!</em></p>
+                                        </div>     
+                                    </Tab>
+                                    <Tab eventKey="tarjeta" title="Tarjeta">
+                                        <div className="d-flex flex-column aligns-items-center justify-content-start border-start border-bottom p-2 my-3">
+                                            <div>
+                                                <h6><em>Comprá con tu tarjeta favorita en:</em></h6>
+                                            </div>
+                                            <div className="d-flex ">
+                                            <Form.Select onChange={(e)=>{setCuotas(e.target.value)}} style={{width:'auto'}}>
+                                            <option value="6">6</option>
+                                            <option value="3">3</option>
+                                            </Form.Select>
+                                                <h4 className="m-auto mx-2">Cuotas sin interés de:</h4>
+                                                <h2 className="detail-price my-auto">${(Math.round(item.price * 1.6 / cuotas)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</h2>
+                                            </div>
+                                        </div>        
+                                    </Tab>
+                                    <Tab eventKey="efectivo" title="Efectivo">
+                                        <div className="d-flex aligns-items-center justify-content-start border-start border-bottom p-2">
+                                            <h1 className="detail-price text-warning">${(item.price*0.90).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</h1>
+                                            <p className="ms-3 my-auto text-muted"><em>Disfrutá un 10% extra (Sólo en Córdoba capital)</em></p>
+                                        </div> 
+                                    </Tab>
+                                </Tabs>
+
                                 <div className="buttons d-flex flex-row mt-4 gap-2">
                                     <Button variant="outline-dark" className="w-50 p-2">Comprar ahora</Button>
-                                    <Button variant="warning" className="w-50 p-2">Agregar al carrito</Button>
+                                    <Button variant="warning" className="w-50 p-2" onClick={()=>{addToCart(item)}}>Agregar al carrito</Button>
                                 </div>
                                 {(currentUser.role_id == 1 || currentUser.role_id == 2) ? (
                                     <div className="buttons d-flex flex-row mt-4 gap-2">

@@ -47,7 +47,7 @@ const RegisterForm = () => {
     onSubmit: (values) => {
       console.log(values);
       axios
-        .post("http://localhost:3001/api/users/register", values)
+        .post(`${process.env.SERVER_URI}/api/users/register`, values)
         .then((response) => {
           console.log(response);
           if (response.data === "Successful") {

@@ -1,25 +1,23 @@
-import titabeLogo from '../assets/images/logowhite.png'
 import { useCart } from "../hooks/useCart.js"
 
 const Footer = () => {
-    const { cart } = useCart()
     return ( 
         
         <div className="p-3 text-bg-dark">
-            <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top ">
-            <p className="col-md-4 mb-0 text-muted">&copy; 2022 TITABÉ - Todos los derechos reservados</p>
-        
-            <a href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <img className="bi me-2" width="80" aria-label="Bootstrap" src={titabeLogo} alt="logo"/>
-            </a>
-        
-            <ul className="nav col-md-4 justify-content-end">
-                <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">Home</a></li>
-                <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">Features</a></li>
-                <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">Pricing</a></li>
-                <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">FAQs</a></li>
-                <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">About</a></li>
+            <footer className="d-flex flex-wrap justify-content-between align-items-center pt-3 border-top border-secondary mx-auto" style={{maxWidth: '1600px'}}>
+            <ul className="nav col-12 col-lg-4 justify-content-center mb-2 mb-lg-0">
+                <li className="nav-item"><a href="/" className="nav-link px-2 text-muted">Inicio</a></li>
+                <li className="nav-item"><a href="/store" className="nav-link px-2 text-muted">Tienda</a></li>
+                <li className="nav-item"><a href="/contact" className="nav-link px-2 text-muted">Contacto</a></li>
+                <li className="nav-item"><a href="/aboutus" className="nav-link px-2 text-muted">Nosotros</a></li>
+                <li className="nav-item"><a href="faqs" className="nav-link px-2 text-muted">Ayuda</a></li>
             </ul>
+        
+            <a href="/" className="col-12 col-lg-4 text-decoration-none mb-2 mb-lg-0">
+                <h4 className="index-slogan my-auto">~ LA SOLUCIÓN PARA EL ASADOR ~</h4>
+            </a>
+            <p className="col-12 col-lg-4 mb-0 text-muted text-center mb-2 mb-lg-0">&copy; 2023 TITABÉ - Todos los derechos reservados</p>
+        
             </footer>
         </div>
      );

@@ -35,7 +35,7 @@ const LoginForm = () => {
     onSubmit: (values) => {
       console.log(values);
       axios
-        .post("http://localhost:3001/api/users/login", values)
+        .post(`${process.env.SERVER_URI}/api/users/login`, values)
         .then((response) => {
           if (!response.data.error) {
             alert("Inicio de sesión correcto!");

@@ -1,40 +1,32 @@
 import Carousel from 'react-bootstrap/Carousel';
 import bannerBlue from '../assets/images/banner-blue.png'
+import banner1 from '../assets/images/banner-1.png'
+import banner2 from '../assets/images/banner-2.png'
+import banner3 from '../assets/images/banner-3.png'
 
 const Banner = () => {
   return (
-    <Carousel className='d-none d-lg-block' /*style={{paddingTop: '83px'}}*/>
+    <Carousel className='d-block ' style={{maxWidth: '1600px'}}>
       <Carousel.Item>
         <img
-          className="d-block w-100"
-          src={bannerBlue}
+          className="index-banner-img w-100"
+          src={banner1}
           alt="First slide"
         />
-        <Carousel.Caption>
-          <h3>Primera publicidad</h3>
-        </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100"
-          src={bannerBlue}
+          className="index-banner-img w-100"
+          src={banner2}
           alt="Second slide"
         />
-
-        <Carousel.Caption>
-          <h3>Segunda publicidad</h3>
-        </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100"
-          src={bannerBlue}
+          className="index-banner-img w-100"
+          src={banner3}
           alt="Third slide"
         />
-
-        <Carousel.Caption>
-          <h3>Tercera publicidad</h3>
-        </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
   );

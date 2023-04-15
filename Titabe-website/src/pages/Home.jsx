@@ -7,8 +7,11 @@ const Home = () => {
     return (
         <>
             <MainNavbar current={"home"}/>
-            <div style={{paddingTop: '100px'}}>
+            <div className="d-flex flex-align-center justify-content-center flex-wrap" style={{paddingTop: '100px'}}>
                 <Banner/>
+                <div className="w-100">
+                    <h1 className="index-slogan pt-5">~ LA SOLUCIÓN PARA EL ASADOR ~</h1>
+                </div>
                 <Index/>
             </div>
             <Footer/>
