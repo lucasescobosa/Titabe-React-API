@@ -3,6 +3,7 @@ import UserContext from "./UserContext";
 import { useNavigate } from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap'
 import { useCart } from "../hooks/useCart.js"
+import { Link } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -10,8 +11,12 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Modal from 'react-bootstrap/Modal';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Ratio from 'react-bootstrap/Ratio'
 
-import { CartIcon } from "./Icons.jsx";
+import { CartIcon, Whatsapp, Instagram, Facebook, Gmail } from "./Icons.jsx";
 import titabeLogo from "../assets/images/logowhite.png";
 
 const MainNavbar = (props) => {
@@ -41,6 +46,13 @@ const MainNavbar = (props) => {
     e.preventDefault();
     navigate('/store', {state:{filter: seachText}})
     setSearchText('')
+  }
+
+  //Modal
+  const [show, setShow] = useState(false);
+
+  function handleShow() {
+    setShow(true);
   }
 
   return (
@@ -78,11 +90,11 @@ const MainNavbar = (props) => {
               </Nav.Link>
             )}
             {props.current === "contact" ? (
-              <Nav.Link href="/contact" className="px-2 text-warning">
+              <Nav.Link  className="px-2 text-warning" onClick={()=> handleShow()}>
                 CONTACTO
               </Nav.Link>
             ) : (
-              <Nav.Link href="/contact" className="px-2 text-white">
+              <Nav.Link  className="px-2 text-white" onClick={()=> handleShow()}>
                 CONTACTO
               </Nav.Link>
             )}
@@ -174,6 +186,74 @@ const MainNavbar = (props) => {
           </Nav>
         </Navbar.Collapse>
       </Container>
+    <Modal show={show} onHide={() => setShow(false)} >
+    <Modal.Header closeButton className="p-5" style={{backgroundColor: 'rgb(248,249,250)'}}>
+      <Modal.Title className="fw-bold">CONECTA CON NOSOTROS!</Modal.Title>
+    </Modal.Header>
+    <Modal.Body className="px-5 py-3" style={{backgroundColor: 'rgb(248,249,250)'}}>
+      <Container fluid>
+        <Row>
+          <h5 className="text-muted text-center">Contactanos por nuestras redes sociales:</h5>
+        </Row>
+        <Row style={{backgroundColor: 'white'}}>
+          <Col xs={4} className="border rounded">
+            <Ratio aspectRatio={'1x1'}>
+              <a href="http://api.whatsapp.com/send?phone=5493513323046" className="p-3 text-center text-decoration-none" style={{color: '#25D366'}}>
+                <Whatsapp/>
+                <p className="text-muted">Whatsapp</p>
+              </a>
+            </Ratio>
+          </Col>
+          <Col xs={4} className="border rounded">
+            <Ratio aspectRatio={'1x1'}>
+            <a href="https://www.instagram.com/titabe.cba/?hl=es" className="p-3 text-center text-decoration-none" style={{color: '#F56040'}}>
+                <Instagram/>
+                <p className="text-muted">Instagram</p>
+              </a>
+            </Ratio>
+          </Col>
+          <Col xs={4} className="border rounded">
+            <Ratio aspectRatio={'1x1'}>
+            <a href="https://www.facebook.com/titabe.cba" className="p-3 text-center text-decoration-none" style={{color: '#4267B2'}}>
+                <Facebook/>
+                <p className="text-muted">Facebook</p>
+              </a>
+            </Ratio>
+          </Col>
+        </Row>
+        <Row className="mt-3" >
+          <h5 className="text-muted text-center">O dejanos tus dudas y te responderemos a la brevedad:</h5>
+        </Row>
+        <Row style={{backgroundColor: 'white'}} className="border rounded">
+          <Col xs={4} >
+                <div className="p-3 text-center my-auto" style={{color: '#F4B400'}}>
+                  <Gmail/>
+                  <p className="text-muted">Mail</p>
+                </div>
+            </Col>
+            <Col xs={8} >
+              <Form className="p-3">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="name@example.com"
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Label>Consulta</Form.Label>
+                <Form.Control as="textarea" rows={3} />
+              </Form.Group>
+              <Button>Enviar</Button>
+            </Form>
+            </Col>
+        </Row>
+      </Container>
+    </Modal.Body>
+    </Modal>
     </Navbar>
   );
 };

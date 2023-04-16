@@ -9,6 +9,7 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx';
 import Store from './pages/Store.jsx';
+import Aboutus from './pages/Aboutus.jsx'
 import Detail from './pages/Detail.jsx';
 import Create from './pages/Create.jsx';
 import Edit from './pages/Edit.jsx'
@@ -25,6 +26,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Home/>} />
             <Route path='/store' element={<Store/>} />
+            <Route path='/aboutus' element={<Aboutus/>} />
             <Route path='/detail/:id' element={<Detail/>} />
             <Route path='/cart' element={<Cart/>} />
 
