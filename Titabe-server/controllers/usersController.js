@@ -1,6 +1,51 @@
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken')
 const db = require('../database/models');
+const nodemailer = require('nodemailer');
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
+require('dotenv').config();
+let token = 0;
+
+const oauth2Client = new OAuth2(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    "https://developers.google.com/oauthplayground"
+)
+
+oauth2Client.setCredentials({
+    refresh_token: process.env.REFRESH_TOKEN 
+})
+
+async function sendMail(email, token) {
+    try {
+        const accessToken = await oauth2Client.getAccessToken()
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: process.env.EMAIL,
+                clientId: process.env.CLIENT_ID,
+                clientSecret: process.env.CLIENT_SECRET,
+                refreshToken: process.env.REFRESH_TOKEN,
+                accessToken: accessToken
+            }
+        })
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to: email,
+            subject: 'Reset Password',
+            html: `<p>Click on the link to reset your password</p>
+                   <a href="http://localhost:3000/reset/${token}">Reset Password</a>`
+        }
+        const result = await transport.sendMail(mailOptions)
+        return result
+    } catch (error) {
+        return error
+    }
+}
+
 
 const usersController = {
 
@@ -61,6 +106,24 @@ const usersController = {
             fullName: req.user.fullName,
             role_id: req.user.role_id,
         })
+    },
+
+    forgotPassword: async (req, res) => {
+        const {email} = req.body;
+        const user = await db.User.findOne({where: {email: email}});
+        if(!user){
+            res.status(404).json({error: 'user not found'})
+        }
+        else{
+            token = Math.floor(100000 + Math.random() * 900000)
+            try{
+                result = await sendMail(email, token);
+                console.log(result)
+                res.json('Successful');
+            } catch(e) {
+                res.status(404).json({error: 'could not send email, error: ' + result})
+            }
+        }
     }
     
 }
